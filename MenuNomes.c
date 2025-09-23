@@ -68,7 +68,11 @@ int Menu(int escolha, char** nome){
             RemoverNome(nome);
             break;
         case 3: 
-            printf("%s\n", *nome);
+            if(*nome != NULL){
+                printf("%s\n", *nome);
+            }else{
+                printf("Nenhum nome registrado!\n");
+            }
             break;
         case 4:
             return escolha;
