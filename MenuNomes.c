@@ -92,6 +92,7 @@ int main(){
     }
     printf("Finalizando programa...\n");
     if(nome != NULL){
+        nome = NULL;
         free(nome);
     }
     return 0;
