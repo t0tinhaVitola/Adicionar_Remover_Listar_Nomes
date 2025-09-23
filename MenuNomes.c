@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 /*
 ==================================================================
 AdicionarNomes
@@ -10,10 +10,9 @@ deixa-os concatenados. Ex: OtavioRobertoLeonard...
 ==================================================================
 */
 void AdicionarNome(char** nome){
-    char* tempNome;
+    char* tempNome = NULL;
     tempNome = (char*)malloc(sizeof(char) * 30);
     scanf("%s", tempNome);
-
     if(*nome == NULL){
         *nome = (char*)malloc(sizeof(char) * strlen(tempNome) + 1);
         strcpy(*nome, tempNome);
@@ -21,10 +20,11 @@ void AdicionarNome(char** nome){
         *nome = realloc(*nome, (strlen(*nome) + strlen(tempNome) + 1));
         strcat(*nome, tempNome);
     }
-    
+
     free(tempNome);
     return;
 }
+
 /*
 =============================================================
 RemoverNome
@@ -34,7 +34,7 @@ para armazena-lo;
 =============================================================    
 */
 void RemoverNome(char** nome){
-    char* tempNome;
+    char* tempNome = NULL;
     tempNome = (char*)malloc(sizeof(char) * 30);
     scanf("%s", tempNome);
 
@@ -45,11 +45,12 @@ void RemoverNome(char** nome){
         *nome = realloc(*nome, strlen(*nome) + 1);
     }
     if(strlen(*nome) == 0){
-        nome = NULL;
+        *nome = NULL;
     }
     free(tempNome);
     return;
 }
+
 /*
 ============================================================
 Menu
@@ -65,7 +66,11 @@ int Menu(int escolha, char** nome){
             AdicionarNome(nome);
             break;
         case 2:
-            RemoverNome(nome);
+            if(*nome != NULL){
+                RemoverNome(nome);
+            }else{
+                printf("Não há nomes para serem removidos! Digite algum nome primeiro!\n");
+            }
             break;
         case 3: 
             if(*nome != NULL){
@@ -90,10 +95,11 @@ int main(){
         scanf("%d", &escolha);
         Menu(escolha, &nome);
     }
-    printf("Finalizando programa...\n");
     if(nome != NULL){
         nome = NULL;
         free(nome);
     }
+
+    printf("Finalizando programa...\n");
     return 0;
 }
